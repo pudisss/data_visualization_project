@@ -284,8 +284,26 @@ class EV(object):
                 for d in ndf[columnname[j]][:amountdata]:
                     data[j].append(int(d))
         elif type(lst) != type(columnname):
-            pass
-        print(data)
+            for d in ndf[columnname][:amountdata]:
+                data.append(int(d))
+
+        # To check that the users want to decorate the chart or not or have to check that length of the variable data is more than or 1
+        if decoration == True:
+            if len(data) >= 1:
+                plt.style.use("seaborn")
+                fig, ax = plt.subplots(len(data))
+                for i in range(len(ax)):
+                    ax[i].bar(range(len(data[i])), data[i], alpha=alpha, color=color[i], width=1, edgecolor="black")
+                plt.show()
+
+            elif len(data) == 1:
+                plt.bar(range(len(data)), data, alpha=alpha, color=color, width=1, edgecolor="black")
+                plt.show()
+        elif decoration == False:
+            if len(data) >= 1:
+                pass
+            elif len(data) == 1:
+                pass
 
 
 
@@ -388,6 +406,6 @@ class EV(object):
 
 
 
-
+# The code here is to call the module or class
 e = EV()
-e.bar_int("Pokemon1.csv", ["Attack", "Defense"], True, "m", 0.48, 500)
+e.bar_int("Pokemon1.csv", ["Attack", "Defense"], True, ["m", "y"], 0.48, 500)
