@@ -409,8 +409,81 @@ class EV(object):
                     plt.scatter(range(len(data[j])), data[j])
                 plt.show()
 
+# The new class that will handle all of the 3d chart
+class TRDEV(object):
+
+    def plot_int(self, filename, columnname, decoration, linestyle, linewidth, color, amountdata):
+        """
+
+        :param filename: Name of the file
+        :param columnname: name of the column
+        :param decoration: Boolean True or False
+        :param linestyle: It can be a list or string
+        :param linewidth: It can be a list or string
+        :param color: It can be a list or string
+        :param amountdata: integer
+        :return: 3d chart
+        """
+        # To get the default file path
+        default = os.path.join(os.environ.get('HOMEDRIVE'), r"\Users")
+
+        # To change the current working directory
+
+        os.chdir(r"{}".format(default))
+
+        # To get the default folder in C:\Users
+        def_file = os.listdir()
+        file_def = ['All Users', 'Default', 'Default User', 'desktop.ini', 'Public']
+        for f in file_def:
+            if f in def_file:
+                def_file.remove(f)
+
+        unfilepath = os.path.join(default, def_file[0])
+
+        # To loop through all of the files and folders in the user computer
+        rfilepath = []
+        for path, folder, file in os.walk(r"{}".format(unfilepath)):
+            if filename in file:
+                filepath = os.path.join(path, filename)
+                rfilepath.append(filepath)
+        # To make the data frame by using the filepath from the variable called rfilepath
+        df = pd.read_csv(r"{}".format(rfilepath[0]))
+        # The data frame that doesn't have the nan value
+
+        ndf = df.dropna(axis=0)
+        # The variable that will use to fill the data from the Series to the variable list
+        integer = 9384
+        lst = []
+        data = []
+        # To get the data from the Series
+        if type(columnname) == type(lst):
+            for j in range(len(columnname)):
+                data.append([])
+                for d in ndf[columnname[j]][:amountdata]:
+                    data[j].append(int(d))
+        elif type(columnname) != type(lst):
+            for d in ndf[columnname[j]][:amountdata]:
+                data.append(int(d))
+
+        # To check if the user wants to decorate the chart or not
+        if decoration == True:
+            if len(data) >= 1:
+                fig = plt.figure()
+                ax = plt.axes(projection="3d")
+                for j in range(len(data)):
+                    ax.plot3D(range(len(data[j])), data[j], linestyle=linestyle[j], color=color[j])
+                plt.show()
+            elif len(data) == 1:
+                pass
+        elif decoration == False:
+            pass
+        
+
+
+
+
 
 
 # The code here is to call the module or class
-e = EV()
-e.bar_int("Pokemon1.csv", ["Attack", "Defense"], True, ["m", "y"], 0.48, 500)
+e = TRDEV()
+e.plot_int("Pokemon1.csv", ["Attack", "Defense", "HP"], True, ['solid', 'dashed', 'dashdot'], 2, ["m", "y", "g"], 20)
