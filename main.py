@@ -222,7 +222,7 @@ class EV(object):
                 plt.style.use("seaborn")
                 fig, ax = plt.subplots(len(data))
                 for j in range(len(ax)):
-                    ax[j].plot(range(len(data[j])), data[j], linestyle=linestyle, linewidth=linewidth, color=color)
+                    ax[j].plot(range(len(data[j])), data[j], linestyle=linestyle[j], linewidth=linewidth[j], color=color[j])
                 plt.show()
         elif decoration == False:
             if len(data) == 1:
@@ -301,9 +301,14 @@ class EV(object):
                 plt.show()
         elif decoration == False:
             if len(data) >= 1:
-                pass
+                fig, ax = plt.subplots(len(data))
+                for j in range(len(ax)):
+                    ax[j].bar(range(len(data[j])), data[j], alpha=alpha, color=color[j], width=1, edgecolor="black")
+                plt.show()
             elif len(data) == 1:
-                pass
+                plt.bar(range(len(data)), data)
+                plt.grid(True, linestyle=":", linewidth=1)
+                plt.show()
 
 
 
