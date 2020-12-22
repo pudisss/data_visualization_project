@@ -10,6 +10,10 @@ df = pd.read_csv(r"C:\Users\pudis\data science file\All csv file\best seller boo
 # The data frame that doesn't have the nan value
 ndf = df.dropna(axis=0)
 
+# Separate the year
+
+
+print(tn)
 def bar_user_rating():
 	# The variable that use for fill the data from the data frame
 	name = []
@@ -48,6 +52,3 @@ def bar_rating():
 
 
 
-
-
-bar_rating()

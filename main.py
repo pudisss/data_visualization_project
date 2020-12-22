@@ -282,34 +282,60 @@ class EV(object):
             for j in range(len(columnname)):
                 data.append([])
                 for d in ndf[columnname[j]][:amountdata]:
-                    data[j].append(int(d))
+                    data[j].append(d)
         elif type(lst) != type(columnname):
             for d in ndf[columnname][:amountdata]:
-                data.append(int(d))
+                data.append(d)
+        # To get the filename by using loops and the variable below is use in this situation
+        name = []
+        typefile = [".csv", ".json", ".png", ".jpg", ".html"]
+        for t in typefile:
+            if filename.endswith(t):
+                names = filename.rstrip(t)
+                numbers = [z for z in range(10)]
+                for n in numbers:
+                    if str(n) in names:
+                        newname = names.strip(str(n))
+                        name.append(newname)
+        
+        # To get the data from the data frame
 
-        # To check that the users want to decorate the chart or not or have to check that length of the variable data is more than or 1
+        lst = []
+        data = []
+        if type(lst) == type(columnname):
+            for j in range(len(columnname)):
+                data.append([])
+                for d in ndf[columnname[j]][:amountdata]:
+                    data[j].append(d)
+        elif type(lst) != type(columnname):
+            for d in ndf[columnname][:amountdata]:
+                data.append(d)
+
+        # To make the bar chart but before we do that we have to check that the user wants to decorate the chart or not
         if decoration == True:
             if len(data) >= 1:
                 plt.style.use("seaborn")
                 fig, ax = plt.subplots(len(data))
-                for i in range(len(ax)):
-                    ax[i].bar(range(len(data[i])), data[i], alpha=alpha, color=color[i], width=1, edgecolor="black")
+                for j in range(len(ax)):
+                    ax[j].bar(range(len(data[j])), data[j], color=color[j],  alpha=alpha, edgecolor="black")
+                plt.xlabel("The amount of {}".format(name[0]))
+                plt.ylabel("The {} of {}".format(columnname, name[0]))
                 plt.show()
-
             elif len(data) == 1:
-                plt.bar(range(len(data)), data, alpha=alpha, color=color, width=1, edgecolor="black")
+                plt.grid(True, linestyle=":", linewidth=2) # The argument is default
+                plt.bar(range(len(data)), data, color=color, alpha=alpha, edgecolor='black')
                 plt.show()
         elif decoration == False:
             if len(data) >= 1:
                 fig, ax = plt.subplots(len(data))
-                for j in range(len(ax)):
-                    ax[j].bar(range(len(data[j])), data[j], alpha=alpha, color=color[j], width=1, edgecolor="black")
+                for i in range(len(data)):
+                    ax[i].plot(range(len(data[i])), data[i], alpha=alpha, color=color[i], edegcolor="black")
                 plt.show()
             elif len(data) == 1:
-                plt.bar(range(len(data)), data)
-                plt.grid(True, linestyle=":", linewidth=1)
+                plt.grid(True, linestyle=":", linewidth=2) # The argument is default
+                plt.bar(range(len(data)), data, color=color, alpha=alpha, edgecolor="black")
                 plt.show()
-
+        
 
 
 
@@ -499,4 +525,6 @@ class TRDEV(object):
 
 # The code here is to call the module or class
 e = TRDEV()
-e.plot_int("Pokemon1.csv", ["Attack", "Defense", "HP"], True, ['solid', 'dashed', 'dashdot'], 2, ["m", "y", "g"], 20)
+ew = EV()
+
+ew.bar_int("Pokemon1.csv", ["Attack", "Defense"], True, ["r", "b"], 0.45, 255)
