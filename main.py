@@ -471,12 +471,25 @@ class TRDEV(object):
                 fig = plt.figure()
                 ax = plt.axes(projection="3d")
                 for j in range(len(data)):
-                    ax.plot3D(range(len(data[j])), data[j], linestyle=linestyle[j], color=color[j])
+                    ax.plot3D(range(len(data[j])), data[j], linestyle=linestyle[j], color=color[j], linewidth=linewidth[i])
                 plt.show()
             elif len(data) == 1:
-                pass
+                fig = plt.figure()
+                ax = plt.axes(projection="3d")
+                ax.plot3D(range(len(data)), data, linestyle=linestyle, color=color, linewidth=linewidth)
+                plt.show()
         elif decoration == False:
-            pass
+            if len(data) >= 1:
+                fig = plt.figure()
+                ax = plt.axes(projection="3d")
+                for i in range(len(data)):
+                    ax.plot3D(range(len(data[i])), data[i], linestyle=linestyle[i], linewidth=linewidth[i], color=color[i])
+                    plt.show()
+            elif len(data) == 1:
+                fig = plt.figure()
+                ax = plt.axes(projection="3d")
+                ax.plot3D(range(len(data)), data, linestyle=linestyle, linewidth=linewidth, color=color)
+                plt.show()
         
 
 
