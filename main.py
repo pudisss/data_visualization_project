@@ -324,6 +324,7 @@ class EV(object):
             elif len(data) == 1:
                 plt.grid(True, linestyle=":", linewidth=2) # The argument is default
                 plt.bar(range(len(data)), data, color=color, alpha=alpha, edgecolor='black')
+                plt.xlabel("The amount of {}".format(name[0]))
                 plt.show()
         elif decoration == False:
             if len(data) >= 1:
@@ -404,6 +405,17 @@ class EV(object):
                         rfilename = nrfilename.strip(str(n))
 
                         name.append(rfilename)
+        # To get the fiilename 
+        typefile = [".csv", ".json", ".html", ".png"]
+        name = []
+        for t in typefile:
+            if t in filename:
+                names = filename.rstrip(t)
+                numbers = [x for x in range(10)]
+                for n in numbers:
+                    if str(n) in names:
+                        rname = names.strip(str(n))
+                        name.append(rname)
 
         # To check that the users want to decorate the scatter chart
         if decoration == True:
@@ -412,6 +424,8 @@ class EV(object):
                 plt.scatter(range(len(data)), data, color=color, alpha=alpha, edgecolor="black")
                 cbar = plt.colorbar()
                 cbar.set_label("Satisfaction")
+                plt.xlabel("The amount of {}".format(name[0]))
+                plt.ylabel("The {} of {}".format(columnname, name[0]))
                 plt.show()
             elif len(columnname) >= 1:
                 plt.style.use("seaborn")
@@ -433,6 +447,8 @@ class EV(object):
                 plt.grid(True, linestyle="--", linewidth=1)
                 for j in range(len(columnname)):
                     plt.scatter(range(len(data[j])), data[j])
+                plt.xlabel("The amount of {}".format(name[0]))
+                plt.ylabel("The {} of {}".format(columnname, name[0]))
                 plt.show()
 
 # The new class that will handle all of the 3d chart
