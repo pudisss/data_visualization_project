@@ -26,8 +26,28 @@ def bar_user_rating():
 		name.append(n)
 
 	# To make the plot chart 
+	plt.style.use("seaborn")
 	plt.plot(range(len(rating)), rating, linestyle=":", linewidth=2, color="y")
+	
+	plt.xlabel("The amount of movies")
+	plt.ylabel("The Rating")
+	plt.title("The rating of the movies")
+	plt.show()
+def bar_rating():
+	name = []
+	rating = []
+	col = ["Name", "User Rating"]
+	var = [name, rating]
+	for j in range(len(var)):
+		for d in ndf[col[j]][:20]:
+			var[j].append(d)
+	
+	# To make the bar chart
+	plt.barh(name, rating, edgecolor="black", color="r", alpha=0.34)
 	plt.show()
 
 
-bar_user_rating()
+
+
+
+bar_rating()
