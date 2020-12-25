@@ -11,29 +11,62 @@ class EV(object):
     def read_csv(self, filepath):
         """
 
-        :param filepath: File path
-        :return: data frame
-        :var: Useful
+        :param filepath: The filepath
+        :return: Data frame
+
         """
+
+        # To get the filename
+
+
+        
         with open(r"{}".format(filepath), "r") as file:
             data = csv.reader(file)
+            # The code below is to get all of the data from the csv file and some variable that will be filled with data from the csv file
 
-            rdata = []
-            for l in data:
-                rdata.append(l)
+            
+            nrdata = []
+            key = []
+            datas = []
+
+            for d in data:
+                nrdata.append(d)
+
+            for j in range(len(nrdata)):
+                datas.append([])
+                for i in range(len(nrdata[j])):
+                    if j == 0:
+                        key.append(nrdata[0][i])
+                    else:
+
+                        datas[j].append(nrdata[j][i])
+            out = []
+
+            for n in range(len(key)):
+                out.append([])
+
+            for j in range(len(datas)):
+                for i in range(len(datas[j])):
+                    out[i].append(datas[j][i])
+            
             dic = {}
-            length = len(rdata[0])
-            v1 = []; v2 = []; v3 = []
-            var = [v1, v2, v3]
-            for n in range(length):
-                for d in rdata:
-                    var[n].append(d[n])
+            for x in range(len(out)):
+                dic.setdefault(key[x], out[x])
 
-            for j in range(len(rdata[0])):
-                dic.setdefault(rdata[0][j], var[j])
+            # The data frame
             df = pd.DataFrame(data=dic)
 
             print(df)
+
+            
+
+           
+            
+
+
+        
+
+
 
     def listdir(self, foldername):
         """
@@ -504,7 +537,7 @@ class TRDEV(object):
                 for d in ndf[columnname[j]][:amountdata]:
                     data[j].append(int(d))
         elif type(columnname) != type(lst):
-            for d in ndf[columnname[j]][:amountdata]:
+            for d in ndf[columnname][:amountdata]:
                 data.append(int(d))
 
         # To check if the user wants to decorate the chart or not
@@ -513,7 +546,7 @@ class TRDEV(object):
                 fig = plt.figure()
                 ax = plt.axes(projection="3d")
                 for j in range(len(data)):
-                    ax.plot3D(range(len(data[j])), data[j], linestyle=linestyle[j], color=color[j], linewidth=linewidth[i])
+                    ax.plot3D(range(len(data[j])), data[j], linestyle=linestyle[j], color=color[j], linewidth=linewidth[j])
                 plt.show()
             elif len(data) == 1:
                 fig = plt.figure()
@@ -542,4 +575,4 @@ class TRDEV(object):
 e = TRDEV()
 ew = EV()
 
-ew.bar_int("Pokemon1.csv", ["Attack", "Defense"], True, ["r", "b"], 0.45, 255)
+ew.read_csv(r"C:\Users\pudis\data science file\All csv file\iris identification\Iris.csv")
