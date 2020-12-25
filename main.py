@@ -102,14 +102,14 @@ class EV(object):
             print(data)
     def read_json(self, pathfile):
         """
-
-        :param pathfile: The path of the file
-        :return: The data in that json file
+        :param pathfile: Path to the file
         """
-        with open(r"{}".format(pathfile), "r+") as file:
+        with open(r"{}".format(pathfile), "r") as file:
             data = json.load(file)
 
             print(data)
+
+
     def plot_int(self, filename, columnname, decoration, color, linestyle, linewidth, amountdata):
         """
 
@@ -602,6 +602,7 @@ class EV(object):
                 plt.xlabel("The amount of {}".format(name[0]))
                 plt.ylabel("The {} of {}".format(columnname, name[0]))
                 plt.show()
+    
 
 # The new class that will handle all of the 3d chart
 class TRDEV(object):
@@ -684,6 +685,7 @@ class TRDEV(object):
                 ax = plt.axes(projection="3d")
                 ax.plot3D(range(len(data)), data, linestyle=linestyle, linewidth=linewidth, color=color)
                 plt.show()
+    
         
 
 
@@ -694,4 +696,4 @@ class TRDEV(object):
 e = TRDEV()
 ew = EV()
 
-ew.linear("Pokemon1.csv", ["Attack", "Speed", "Sp. Atk"], "Sp. Atk")
+ew.read_json(r"C:\Users\pudis\data science file\All csv file\DE_category_id.json")
