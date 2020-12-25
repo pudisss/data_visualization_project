@@ -4,6 +4,9 @@ from matplotlib import pyplot as plt
 import os
 import json
 import csv
+import sklearn
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
 
 class EV(object):
     # The read_csv function is not ready to use yet it can use when the csv file have only 3 columns but I am going to develop this to be interactive with the use
@@ -57,16 +60,6 @@ class EV(object):
             df = pd.DataFrame(data=dic)
 
             print(df)
-
-            
-
-           
-            
-
-
-        
-
-
 
     def listdir(self, foldername):
         """
@@ -369,7 +362,133 @@ class EV(object):
                 plt.grid(True, linestyle=":", linewidth=2) # The argument is default
                 plt.bar(range(len(data)), data, color=color, alpha=alpha, edgecolor="black")
                 plt.show()
+    def pie_int(self, filename, columnname, decoration, shadow, color, amountdata):
+        """
+        :param filename: File name
+        :param columnname: columnname in the csv file
+        :param decoration: Boolean
+        :param shadow: Boolean
+        :param color: a list if the columnname is a list if not a string
+        :param amountdata: integer
+
+        """
+        default = os.path.join(os.environ.get("HOMEDRIVE"), r"\Users")
+
+        # To change the current working directory
+        os.chdir(r"{}".format(default))
+
+        def_file = os.listdir()
+        file_def = ['All Users', 'Default', 'Default User', 'desktop.ini', 'Public']
         
+        for f in file_def:
+            if f in def_file:
+                def_file.remove(f)
+
+        nrfilepath = os.path.join(default, def_file[0])
+
+        # To loop through all of the file and folder in the users computer
+        filepath = []
+        for path, folder, file in os.walk(r"{}".format(nrfilepath)):
+            if filename in file:
+                nfilepath = os.path.join(path, filename)
+                filepath.append(nfilepath)
+
+        # The data frame
+        df = pd.read_csv(r"{}".format(filepath[0]))
+
+        # To get the from the data frame but we have to check first if the columnname argument is a list or string
+        lst = []
+        data = []
+        if type(lst) == type(columnname):
+            for j in range(len(columnname)):
+                data.append([])
+                for d in df[columnname[j]][:amountdata]:
+                    data[j].append(d)
+        elif type(lst) != type(columnname):
+            for d in df[columnname][:amountdata]:
+                data.append(d)
+
+        # To check that the data that came from the data frame is a list or not
+        out = []
+        if len(data) >= 1:
+            for ind in range(len(data)):
+                out.append(sum(data[ind]))
+        elif len(data) == 1:
+            out.append(data)
+
+        # To plot the pie chart
+        if decoration == True:
+            if len(out) >= 1:
+                plt.style.use("seaborn")
+                plt.pie(out, labels=columnname, shadow=True, wedgeprops={"edgecolor":"black"}, autopct="%1.1f%%")
+                
+                plt.show()
+            
+        elif decoration == False:
+            if len(out) >= 1:
+                plt.grid(True, linestyle="-.", linewidth=2)
+                plt.pie(out, label=columnname, autopct="%1.1f%%")
+                plt.show()
+    def linear(self, filename, columnname,  predictcolumn):
+        """
+        :param filename: Filename
+        :param columnname: List
+        """
+        default = os.path.join(os.environ.get("HOMEDRIVE"), r"\Users")
+
+        # To change the current working directory
+        os.chdir(r"{}".format(default))
+
+        # To get the default file in the default file
+        def_file = os.listdir()
+        file_def = ['All Users', 'Default', 'Default User', 'desktop.ini', 'Public']
+
+        # To delete the file that isn't the default file
+        for f in file_def:
+            if f in def_file:
+                def_file.remove(f)
+
+        nrfile = os.path.join(default, def_file[0])
+        # To loop through all of the folder and file in the user computer
+        filepath = []
+        for path, folder, file in os.walk(r"{}".format(nrfile)):
+            if filename in file:
+                rfilename = os.path.join(path, filename)
+                filepath.append(rfilename)
+
+        # The data frame
+        df = pd.read_csv(r"{}".format(filepath[0]))
+
+        # The data
+        data = df[columnname]
+
+        predict = predictcolumn
+
+        # The x and y data
+        x = np.array(data.drop(predict, 1))
+        y = np.array(data[predict])
+
+        # The training and testing data
+        x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.1)
+
+        # The linear model
+        linear = LinearRegression()
+        linear.fit(x_train, y_train)
+
+        # The predict variable
+
+        prediction = linear.predict(x_test)
+
+        for j in range(len(prediction)):
+            if prediction[j] == y_test[j]:
+                print(prediction[j], x_test[j], y_test[j], "Yes")
+
+            elif prediction[j] != y_test[j]:
+                print(prediction[j], x_test[j], y_test[j], "No")
+
+
+
+
 
 
 
@@ -575,4 +694,4 @@ class TRDEV(object):
 e = TRDEV()
 ew = EV()
 
-ew.read_csv(r"C:\Users\pudis\data science file\All csv file\iris identification\Iris.csv")
+ew.linear("Pokemon1.csv", ["Attack", "Speed", "Sp. Atk"], "Sp. Atk")
