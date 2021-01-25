@@ -566,6 +566,41 @@ class Ebay extends Data_ebay{
     }
   }
 
+  // The register function or the sign up function
+
+  void register(String email, var password, {String name}) {
+
+    // To check that the email and the password that was input is in the system already if it's true this function will call the login functioon
+
+    for (var index=0; index<super.emails.length; ++index) {
+      if (email == super.emails[index] && password == super.passwords[index]) {
+        print("[Login finished]");
+
+        break;
+      }
+      else if (email != super.emails[index] || password != super.passwords[index]) {
+        int time = 0;
+        // To ask the user again and again
+        do {
+          stdout.writeln("Enter your email again :");
+          String newemail = stdin.readLineSync();
+          stdout.writeln("Enter your password again :");
+          var newpassword = stdin.readLineSync();
+
+          if (newemail == super.emails[index] && newpassword == super.passwords[index]) {
+            // The code below is to called the function communicate with the users
+            break;
+          }
+          time += 1;
+
+
+
+        } while ((email != super.emails[index] || password != super.passwords[index]) || time != 5);
+
+      }
+    }
+  }
+
 
 
 }
