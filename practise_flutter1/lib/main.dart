@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import "package:practise_flutter1/pages/homepage.dart";
 import "package:practise_flutter1/loginpage.dart";
+import "package:practise_flutter1/pages/signuppage.dart";
 
 void main() {
   runApp(MyApp());
@@ -60,17 +61,23 @@ class MyApp extends StatelessWidget {
                                         color: Colors.grey))),
                             Container(
                                 padding: EdgeInsets.only(right: 190),
-                                child: RaisedButton(
-                                    onPressed: () => {},
-                                    color: Colors.black,
-                                    child: Text("Sign up",
-                                        style: TextStyle(
-                                            fontFamily: "Oswald",
-                                            fontSize: 15)),
-                                    textColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20)))),
+                                child: Builder(
+                                    builder: (context) => Center(
+                                        child: RaisedButton(
+                                            onPressed: () => Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        signup())),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(30)),
+                                            color: Colors.blue,
+                                            textColor: Colors.white,
+                                            child: Text("Sign up",
+                                                style: TextStyle(
+                                                    fontFamily: "Oswald",
+                                                    fontSize: 15)))))),
                           ],
                         ),
                         decoration: BoxDecoration(

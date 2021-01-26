@@ -16,9 +16,15 @@ class loginpage extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                        margin: EdgeInsets.only(top: 100),
+                        padding: EdgeInsets.only(right: 250),
+                        child: ElevatedButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: Text("Back",
+                                style: TextStyle(fontFamily: "Oswald")))),
+                    Container(
+                        margin: EdgeInsets.only(top: 40),
                         width: 300,
-                        height: 550,
+                        height: 531,
                         decoration: BoxDecoration(
                             color: Colors.white,
                             boxShadow: [
